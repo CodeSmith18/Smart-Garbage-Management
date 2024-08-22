@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         {/* Use the `element` prop instead of `component` */}
-        <Route path = "/" element = {Landing}/>
+        <Route path = "/" element = {<Landing></Landing>}/>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element = {<Login/>}/>
       </Routes>
