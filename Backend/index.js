@@ -3,117 +3,119 @@ const app = express();
 const port = 8000;
 const mongoose = require('mongoose');
 const cors = require('cors');
-const jwt =require('jsonwebtoken');
+const jwt = require('jsonwebtoken');
 
+// Middleware
+app.use(express.json());
+app.use(cors());
 
+// Database connection
 let url = 'mongodb+srv://ritikraj1875:Z7VwN1Ypj3eYUKW9@cluster0.y5obe.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
-mongoose.connect(url,{
-      useNewUrlParser: true,
-      useUnifiedTopology: true
+mongoose.connect(url, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
 });
 mongoose.connection.on('connected', () => {
-      console.log('Database Connected');
+    console.log('Database Connected');
+});
+mongoose.connection.on('error', (err) => {
+    console.log('Database connection error:', err);
 });
 
-const Users = mongoose.model('Users',{
-        username : String,
-        password:String,
-        email:String,
+// Models
+const Users = mongoose.model('Users', {
+    username: String,
+    password: String,
+    email: String,
 });
-const Workers = mongoose.model('Workers',{
-      username : String,
-      password:String,
-      email:String,
+const Workers = mongoose.model('Workers', {
+    username: String,
+    password: String,
+    email: String,
 });
-app.get('/',(req,res)=>{
-      res.send('Hello World');
+
+// Routes
+app.get('/', (req, res) => {
+    res.send('Hello World');
 });
-app.post('/singup_user',(req,res)=>{
-      console.log(req.body);
-      const username = req.body.username;
-      const password = req.body.password;
-      const email = req.body.email;
 
-      const user  = new Users({
-            username:username,
-            password:password,
-            email:email
-      });
+app.post('/signup_user', (req, res) => {
+    console.log(req.body);
+    const { username, password, email } = req.body;
 
-      user.save()
-      .then(()=>{
-            res.send({message : 'Save Success'});
-      })
-      .catch(()=>{
-            res.send({message:'Server Error'});
-      })
+    const user = new Users({
+        username,
+        password,
+        email
+    });
 
-})
-app.post('/singup_worker',(req,res)=>{
-      console.log(req.body);
-      const username = req.body.username;
-      const password = req.body.password;
-      const email = req.body.email;
+    user.save()
+        .then(() => {
+            res.send({ message: 'Save Success' });
+        })
+        .catch(() => {
+            res.send({ message: 'Server Error' });
+        });
+});
 
-      const worker  = new Workers({
-            username:username,
-            password:password,
-            email:email
-      });
+app.post('/signup_worker', (req, res) => {
+    console.log(req.body);
+    const { username, password, email } = req.body;
 
-      worker.save()
-      .then(()=>{
-            res.send({message : 'Save Success'});
-      })
-      .catch(()=>{
-            res.send({message:'Server Error'});
-      })
+    const worker = new Workers({
+        username,
+        password,
+        email
+    });
 
-})
-app.post('login_user',(req,res)=>{
-      console.log(req.body);
-      const username = req.body.username;
-      const password = req.body.password;
+    worker.save()
+        .then(() => {
+            res.send({ message: 'Save Success' });
+        })
+        .catch(() => {
+            res.send({ message: 'Server Error' });
+        });
+});
 
-      Users.findOne({username:username})
-      .then((result)=>{
-            console.log(result,"User Data");
-            if(!result){
-                  res.send({message:"User Not found"});
+app.post('/login_user', (req, res) => {
+    console.log(req.body);
+    const { username, password } = req.body;
+
+    Users.findOne({ username })
+        .then((result) => {
+            console.log(result, "User Data");
+            if (!result) {
+                res.send({ message: "User Not found" });
+            } else {
+                if (result.password === password) {
+                    res.send({ message: "User found" });
+                } else {
+                    res.send({ message: "Incorrect Password" });
+                }
             }
-            else{
-                  if(result.password == password){
-                       res.send({message:"user found"});
-                  }
-                  else{
-                        res.send({message:"Incorrect Password"});
-                  }
-            }
-      });
-
+        });
 });
-app.post('login_Worker',(req,res)=>{
-      console.log(req.body);
-      const username = req.body.username;
-      const password = req.body.password;
 
-      Workers.findOne({username:username})
-      .then((result)=>{
-            console.log(result,"User Data");
-            if(!result){
-                  res.send({message:"User Not found"});
-            }
-            else{
-                  if(result.password == password){
-                       res.send({message:"user found"});
-                  }
-                  else{
-                        res.send({message:"Incorrect Password"});
-                  }
-            }
-      });
+app.post('/login_worker', (req, res) => {
+    console.log(req.body);
+    const { username, password } = req.body;
 
+    Workers.findOne({ username })
+        .then((result) => {
+            console.log(result, "Worker Data");
+            if (!result) {
+                res.send({ message: "User Not found" });
+            } else {
+                if (result.password === password) {
+                    res.send({ message: "User found" });
+                } else {
+                    res.send({ message: "Incorrect Password" });
+                }
+            }
+        });
 });
-app.listen(port,()=>{
-      console.log(`App is Listening on the port ${port}`);
+
+// Start the server
+app.listen(port, () => {
+    console.log(`App is Listening on the port ${port}`);
 });
