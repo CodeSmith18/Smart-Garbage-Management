@@ -7,8 +7,6 @@ import Landing from './landing_Page/landing.jsx';
 import Signup from './Components/Signup.jsx';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <BrowserRouter>
       <Routes>
@@ -21,4 +19,4 @@ function App() {
   );
 }
 
-export default App
+export default App;
