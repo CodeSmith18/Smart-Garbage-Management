@@ -1,0 +1,127 @@
+.dashboard {
+    display: flex;
+    flex-direction: row;
+    height: 100vh;
+    width: 100vw;
+    background-image: linear-gradient(to bottom,#34c734, #34C759, #2E865F); /* green gradient */
+  }
+  
+  .sidebar {
+    width: 250px;
+    background-image: linear-gradient(to bottom,#3b3125, #2b3125, #151c19); /* green gradient */
+    color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .sidebar .logo {
+    margin-bottom: 20px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar li {
+    margin-bottom: 10px;
+  }
+  
+  .sidebar a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .sidebar a.active {
+    background-color: #1A7431; /* darker greenish color */
+    padding: 10px;
+    border-radius: 10px;
+  }
+  
+  .main-content {
+    flex: 1;
+    padding: 20px;
+    background-image: url('leaf-pattern.png'); /* add a leaf pattern background */
+    background-size: 50px 50px;
+    background-repeat: repeat;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #F7F7F7; /* light gray */
+    border-bottom: 1px solid #DDD; /* light gray border */
+  }
+  
+  .search-bar {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border: 1px solid #CCC; /* light gray border */
+    border-radius: 10px;
+    background-color: #F2F2F2; /* light gray */
+  }
+  
+  .search-bar input {
+    width: 200px;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .search-bar button {
+    background-color: #2E865F; /* greenish color */
+    color: #fff;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .user-profile {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+  }
+  
+  .user-profile img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .card {
+    width: 250px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #F7F7F7; /* light gray */
+    border: 1px solid #DDD; /* light gray border */
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card.recyclable {
+    background-color: #C6F7D0; /* light green */
+    border-color: #8BC34A; /* greenish color */
+  }
+  
+  .card.non-recyclable {
+    background-color: #F7CAC9; /* light red */
+    border-color: #E67E73; /* reddish color */
+  }
+  
+  .card.eco-friendly {
+    background-image: linear-gradient(to bottom, #34C759, #2E865F); /* green gradient */
+    border-color: #1A7431; /* darker greenish color */
+  }
