@@ -79,16 +79,20 @@ app.post('/signup_worker', (req, res) => {
 
 app.post('/login_user', (req, res) => {
     console.log(req.body);
-    const { username, password } = req.body;
-
-    Users.findOne({ username })
+    const username = req.body.username;
+    const password = req.body.password;
+ 
+    Users.findOne({ username:username })
         .then((result) => {
             console.log(result, "User Data");
             if (!result) {
                 res.send({ message: "User Not found" });
             } else {
                 if (result.password === password) {
-                    res.send({ message: "User found" });
+                    const token = jwt.sign({
+                        data:result
+                    },'MYKEY',{expiresIn:'1h'});
+                    res.send({ message: "User found",token:token,userId:result._id });
                 } else {
                     res.send({ message: "Incorrect Password" });
                 }
@@ -107,7 +111,10 @@ app.post('/login_worker', (req, res) => {
                 res.send({ message: "User Not found" });
             } else {
                 if (result.password === password) {
-                    res.send({ message: "User found" });
+                    const token = jwt.sign({
+                        data:result
+                    },'MYKEY',{expiresIn:'1h'});
+                    res.send({ message: "User found",token:token,userId:result._id });
                 } else {
                     res.send({ message: "Incorrect Password" });
                 }
