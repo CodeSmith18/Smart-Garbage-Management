@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Signup from './Components/Signup.jsx';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -17,9 +16,12 @@ function App() {
         <Route path = "/" element = {<Landing></Landing>}/>
         <Route path="/signup" element={<Signup />} />
         <Route path="/login" element = {<Login/>}/>
+        <Route path="/dashboard" element = {<AdminDashboard/>}/>
+        <Route path="/userpage" element = {<UserPageD/>}/>
       </Routes>
     </BrowserRouter>
   );
 }
+
 
 export default App;
