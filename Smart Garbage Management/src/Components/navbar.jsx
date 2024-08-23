@@ -39,13 +39,13 @@ const NavBar = () => {
 						<h1 className="text-2xl font-bold">My Website</h1>
 					</div>
 					<div className="">
-						<div className="glass p-1 pr-2 ml-10 flex items-baseline space-x-4">
-							<div
+						<div className=" p-1 pr-2 ml-10 flex items-baseline space-x-4">
+							<button
 								onClick={handleSignupClick}
-								className="cursor-pointer text-lg underline ml-2"
+								className="px-4 py-2 text-lg font-semibold text-white bg-gray-800 rounded-lg transition-all transform hover:bg-gray-700 hover:-translate-y-0.5"
 							>
-								Sign Up
-							</div>
+								Login
+							</button>
 						</div>
 					</div>
 				</div>
