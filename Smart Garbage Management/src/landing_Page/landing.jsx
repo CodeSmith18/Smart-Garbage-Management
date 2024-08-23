@@ -42,7 +42,7 @@ function Landing() {
 					</div> */}
 					<div className="  md:flex  gap-12 lg:gap-32 flex flex-wrap justify-center items-center">
 						<div className="flex items-center justify-center ">
-							<div className="w-52 p-4  bg-slate-200 rounded-lg shadow-md border-2 border-black  transition-transform transform hover:-translate-y-4 hover:shadow-xl">
+							<div className="w-52 p-4  bg-emerald-100 rounded-lg shadow-md border-2 border-black  transition-transform transform hover:-translate-y-4 hover:shadow-xl">
 								<h2 className="text-2xl font-semibold text-gray-800">Worker</h2>
 								<Lottie
 									className="h-36"
@@ -58,7 +58,7 @@ function Landing() {
 							</div>
 						</div>
 						<div className="flex items-center justify-center ">
-							<div className="w-52 p-4 bg-slate-200  rounded-lg shadow-md border-2 border-black transition-transform transform hover:-translate-y-3 hover:shadow-xl ">
+							<div className="w-52 p-4 bg-emerald-100  rounded-lg shadow-md border-2 border-black transition-transform transform hover:-translate-y-3 hover:shadow-xl ">
 								{/* <p className="mt-2 text-sm text-gray-600">
 									iaculis non accumsan et, commodo vel justo.
 								</p> */}
@@ -77,7 +77,7 @@ function Landing() {
 							</div>
 						</div>
 						<div className="flex items-center justify-center ">
-							<div className="w-52 p-4 bg-slate-200  rounded-lg shadow-md border-2 border-black  transition-transform transform hover:-translate-y-4 hover:shadow-xl">
+							<div className="w-52 p-4 bg-emerald-100  rounded-lg shadow-md border-2 border-black  transition-transform transform hover:-translate-y-4 hover:shadow-xl">
 								<h2 className="text-2xl font-semibold text-gray-800">Admin</h2>
 								<Lottie
 									className="h-36"
