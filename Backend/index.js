@@ -29,7 +29,7 @@ const Users = mongoose.model("Users", {
 	userId: String,
 	firstName: String,
 	lastName: String,
-	dob: Date,
+	dob: String,
 	gender: String,
 	location: String,
 	phoneNumber: String,
@@ -41,13 +41,27 @@ const Workers = mongoose.model("Workers", {
 	userId: String,
 	firstName: String,
 	lastName: String,
-	dob: Date,
+	dob: String,
 	gender: String,
 	location: String,
 	phoneNumber: String,
 
 	password: String,
 	email: String,
+});
+const AssignWork = mongoose.model("assignwork", {
+	name: String,
+	phone: String,
+	address: String,
+	service: String,
+	message: String,
+});
+
+const works = mongoose.model("works", {
+	name: String,
+	phone: String,
+	location: String,
+	work: String,
 });
 
 // Routes
@@ -184,7 +198,22 @@ app.post("/profile_worker", (req, res) => {
 			res.status(500).send({ message: "Server Error" });
 		});
 });
-
+//fetch worker
+app.get("/profile_worker/:userId", (req, res) => {
+	const { userId } = req.params;
+	Workers.findOne({ userId }) // Use Workers instead of Users
+		.then((worker) => {
+			if (worker) {
+				res.json(worker);
+			} else {
+				res.status(404).send({ message: "Worker not found" });
+			}
+		})
+		.catch((error) => {
+			console.error("Error fetching worker profile:", error);
+			res.status(500).send({ message: "Server Error" });
+		});
+});
 app.post("/login_user", (req, res) => {
 	console.log(req.body);
 	const username = req.body.username;
@@ -235,7 +264,38 @@ app.post("/login_worker", (req, res) => {
 		}
 	});
 });
+// assign work
+app.post("/assignwork", (req, res) => {
+	console.log(req.body);
+	const { name, phone, address, service, message } = req.body;
 
+	const workAssignment = new AssignWork({
+		name,
+		phone,
+		address,
+		service,
+		message,
+	});
+
+	workAssignment
+		.save()
+		.then(() => {
+			res.send({ message: "Save Success" });
+		})
+		.catch((error) => {
+			console.error("Error saving work assignment:", error);
+			res.status(500).send({ message: "Server Error" });
+		});
+});
+// Endpoint to get all work assignments
+// app.get("/assignwork", async (req, res) => {
+// 	try {
+// 		const work = await AssignWork.find();
+// 		res.status(200).json(work);
+// 	} catch (error) {
+// 		res.status(500).json({ message: error.message });
+// 	}
+// });
 // Start the server
 app.listen(port, () => {
 	console.log(`App is Listening on the port ${port}`);
