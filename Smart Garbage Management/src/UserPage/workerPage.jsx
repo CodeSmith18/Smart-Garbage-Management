@@ -113,7 +113,7 @@ function WorkerPage() {
 								<span className="material-icons-outlined float-left pr-2">
 									settings
 								</span>
-								Settings
+								Donate
 								<span className="material-icons-outlined float-right">
 									keyboard_arrow_right
 								</span>
@@ -145,7 +145,7 @@ function WorkerPage() {
 
 							<div className="bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 border rounded-xl w-full sm:w-5/12 ml-0 sm:ml-2 p-6 shadow-lg">
 								<p className="text-4xl sm:text-5xl text-white">
-									No Work <br />
+									Available Work <br />
 									<strong>10</strong>
 								</p>
 								<button
@@ -157,7 +157,7 @@ function WorkerPage() {
 							</div>
 						</div>
 
-						<div className="flex flex-col sm:flex-row h-64 mt-6">
+						{/* <div className="flex flex-col sm:flex-row h-64 mt-6">
 							<div className="bg-white rounded-xl shadow-lg px-6 py-4 w-full sm:w-4/12 mb-4 sm:mb-0">
 								"Reduce, reuse, recycle isn’t just a slogan; it’s a way of
 								life."
@@ -170,7 +170,7 @@ function WorkerPage() {
 								"The future of humanity and indeed, all life on earth, depends
 								on us."
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 
