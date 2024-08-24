@@ -16,85 +16,85 @@ function UserPage() {
     navigate("/profilepage");
   };
 
-  const handleAssignedWorkClick = () => {
-    navigate("/workform");
-  };
+	const handleAssignedWorkClick = () => {
+		navigate("/workform");
+	};
 
-  return (
-    <>
-      <link
-        href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
-        rel="stylesheet"
-      />
-      <div className="min-h-screen flex flex-col bg-gray-50">
-        {/* Header */}
-        <div className="fixed text-blue-800 px-4 sm:px-10 py-1 z-10 w-full bg-white shadow-md">
-          <div className="flex items-center justify-between py-2 text-2xl sm:text-5xl">
-            <div className="font-bold text-gray-800 text-lg sm:text-xl">
-              Clean<span className="text-blue-600">Stream</span>
-            </div>
-            <div className="flex items-center text-gray-500">
-              <span
-                className="material-icons-outlined p-1 sm:p-2"
-                style={{ fontSize: "20px" }}
-              >
-                search
-              </span>
-              <span
-                className="material-icons-outlined p-1 sm:p-2"
-                style={{ fontSize: "20px" }}
-              >
-                notifications
-              </span>
-              <div
-                className="bg-center bg-cover bg-no-repeat rounded-full inline-block h-8 w-8 sm:h-12 sm:w-12 ml-2"
-                style={{
-                  backgroundImage: `url(${Img})`,
-                }}
-              ></div>
-            </div>
-          </div>
-        </div>
+	return (
+		<>
+			<link
+				href="https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp"
+				rel="stylesheet"
+			/>
+			<div className="min-h-screen flex flex-col bg-gray-50">
+				{/* Header */}
+				<div className="fixed text-blue-800 px-4 sm:px-10 py-1 z-10 w-full bg-white shadow-md">
+					<div className="flex items-center justify-between py-2 text-2xl sm:text-5xl">
+						<div className="font-bold text-gray-800 text-lg sm:text-xl">
+							Clean<span className="text-blue-600">Stream</span>
+						</div>
+						<div className="flex items-center text-gray-500">
+							<span
+								className="material-icons-outlined p-1 sm:p-2"
+								style={{ fontSize: "20px" }}
+							>
+								search
+							</span>
+							<span
+								className="material-icons-outlined p-1 sm:p-2"
+								style={{ fontSize: "20px" }}
+							>
+								notifications
+							</span>
+							<div
+								className="bg-center bg-cover bg-no-repeat rounded-full inline-block h-8 w-8 sm:h-12 sm:w-12 ml-2"
+								style={{
+									backgroundImage: `url(${Img})`,
+								}}
+							></div>
+						</div>
+					</div>
+				</div>
 
-        {/* Main Content */}
-        <div className="flex flex-col sm:flex-row flex-grow pt-24 px-4 sm:px-10 pb-4">
-          {/* Sidebar */}
-          <div className="hidden sm:block sm:w-2/12 sm:mr-6 mb-6 sm:mb-0">
-            <div className="rounded-xl shadow-lg px-6 py-4 bg-white">
-              <button
-                onClick={handleLoginClick}
-                className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full"
-              >
-                <span className="material-icons-outlined float-left pr-2">
-                  dashboard
-                </span>
-                Home
-                <span className="material-icons-outlined float-right">
-                  keyboard_arrow_right
-                </span>
-              </button>
-              <button
-                onClick={handleAssignedWorkClick}
-                className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full"
-              >
-                <span className="material-icons-outlined float-left pr-2">
-                  tune
-                </span>
-                Assign Work
-                <span className="material-icons-outlined float-right">
-                  keyboard_arrow_right
-                </span>
-              </button>
-              <button className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full">
-                <span className="material-icons-outlined float-left pr-2">
-                  file_copy
-                </span>
-                Completed Work
-                <span className="material-icons-outlined float-right">
-                  keyboard_arrow_right
-                </span>
-              </button>
-            </div>
+				{/* Main Content */}
+				<div className="flex flex-col sm:flex-row flex-grow pt-24 px-4 sm:px-10 pb-4">
+					{/* Sidebar */}
+					<div className="hidden sm:block sm:w-2/12 sm:mr-6 mb-6 sm:mb-0">
+						<div className="rounded-xl shadow-lg px-6 py-4 bg-white">
+							<button
+								onClick={handleLoginClick}
+								className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full"
+							>
+								<span className="material-icons-outlined float-left pr-2">
+									dashboard
+								</span>
+								Home
+								<span className="material-icons-outlined float-right">
+									keyboard_arrow_right
+								</span>
+							</button>
+							<button
+								onClick={handleAssignedWorkClick}
+								className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full"
+							>
+								<span className="material-icons-outlined float-left pr-2">
+									tune
+								</span>
+								Assign Work
+								<span className="material-icons-outlined float-right">
+									keyboard_arrow_right
+								</span>
+							</button>
+							<button className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full">
+								<span className="material-icons-outlined float-left pr-2">
+									file_copy
+								</span>
+								Completed Work
+								<span className="material-icons-outlined float-right">
+									keyboard_arrow_right
+								</span>
+							</button>
+						</div>
 
             <div className="rounded-xl shadow-lg mt-6 px-6 py-4 bg-white">
               <button
@@ -174,35 +174,35 @@ function UserPage() {
           </div>
         </div>
 
-        {/* Footer (for small screens) */}
-        <div className="block sm:hidden w-full mt-auto py-4 px-6 bg-gray-200 shadow-md">
-          <div className="flex justify-around">
-            <button
-              onClick={handleLoginClick}
-              className="flex flex-col items-center text-gray-600 hover:text-blue-600"
-            >
-              <span className="material-icons-outlined">dashboard</span>
-              Home
-            </button>
-            <button
-              onClick={handleAssignedWorkClick}
-              className="flex flex-col items-center text-gray-600 hover:text-blue-600"
-            >
-              <span className="material-icons-outlined">tune</span>
-              Work
-            </button>
-            <button
-              onClick={handleProfileClick}
-              className="flex flex-col items-center text-gray-600 hover:text-blue-600"
-            >
-              <span className="material-icons-outlined">face</span>
-              Profile
-            </button>
-          </div>
-        </div>
-      </div>
-    </>
-  );
+				{/* Footer (for small screens) */}
+				<div className="block sm:hidden w-full mt-auto py-4 px-6 bg-gray-200 shadow-md">
+					<div className="flex justify-around">
+						<button
+							onClick={handleLoginClick}
+							className="flex flex-col items-center text-gray-600 hover:text-blue-600"
+						>
+							<span className="material-icons-outlined">dashboard</span>
+							Home
+						</button>
+						<button
+							onClick={handleAssignedWorkClick}
+							className="flex flex-col items-center text-gray-600 hover:text-blue-600"
+						>
+							<span className="material-icons-outlined">tune</span>
+							Work
+						</button>
+						<button
+							onClick={handleProfileClick}
+							className="flex flex-col items-center text-gray-600 hover:text-blue-600"
+						>
+							<span className="material-icons-outlined">face</span>
+							Profile
+						</button>
+					</div>
+				</div>
+			</div>
+		</>
+	);
 }
 
 export default UserPage;

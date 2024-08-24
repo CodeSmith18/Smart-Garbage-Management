@@ -16,9 +16,9 @@ function WorkerPage() {
     navigate("/profilepage");
   };
 
-  const handleAssignedWorkClick = () => {
-    navigate("/workform");
-  };
+	const handleAssignedWorkClick = () => {
+		navigate("/assignedwork");
+	};
 
   return (
     <>

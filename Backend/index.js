@@ -50,6 +50,7 @@ const Workers = mongoose.model("Workers", {
 	email: String,
 });
 const AssignWork = mongoose.model("assignwork", {
+	userId: { type: String, required: true },
 	name: String,
 	phone: String,
 	address: String,
@@ -62,6 +63,16 @@ const works = mongoose.model("works", {
 	phone: String,
 	location: String,
 	work: String,
+});
+const ArchivedWork = mongoose.model("ArchivedWork", {
+	_id: mongoose.Schema.Types.ObjectId,
+	userId: { type: String, required: true },
+	name: String,
+	phone: String,
+	address: String,
+	service: String,
+	message: String,
+	archivedAt: { type: Date, default: Date.now },
 });
 
 // Routes
@@ -265,11 +276,11 @@ app.post("/login_worker", (req, res) => {
 	});
 });
 // assign work
-app.post("/assignwork", (req, res) => {
-	console.log(req.body);
-	const { name, phone, address, service, message } = req.body;
+app.post("/assignwork", async (req, res) => {
+	const { id, name, phone, address, service, message } = req.body;
 
 	const workAssignment = new AssignWork({
+		userId: id, // Store the userId from the request
 		name,
 		phone,
 		address,
@@ -277,16 +288,15 @@ app.post("/assignwork", (req, res) => {
 		message,
 	});
 
-	workAssignment
-		.save()
-		.then(() => {
-			res.send({ message: "Save Success" });
-		})
-		.catch((error) => {
-			console.error("Error saving work assignment:", error);
-			res.status(500).send({ message: "Server Error" });
-		});
+	try {
+		const savedTask = await workAssignment.save();
+		res.send({ message: "Work assigned successfully", data: savedTask });
+	} catch (error) {
+		console.error("Error assigning work:", error);
+		res.status(500).send({ message: "Server Error" });
+	}
 });
+
 // Endpoint to get all work assignments
 // app.get("/assignwork", async (req, res) => {
 // 	try {
@@ -296,6 +306,84 @@ app.post("/assignwork", (req, res) => {
 // 		res.status(500).json({ message: error.message });
 // 	}
 // });
+app.get("/assignwork", async (req, res) => {
+	const userId = req.query.userId; // Get the userId from the query parameters
+
+	try {
+		const tasks = await AssignWork.find({ userId }); // Filter tasks by userId
+		res.send(tasks);
+	} catch (error) {
+		console.error("Error fetching work assignments:", error);
+		res.status(500).send({ message: "Server Error" });
+	}
+});
+app.get("/assignedwork", async (req, res) => {
+	try {
+		const tasks = await AssignWork.find(); // Ensure it returns userId
+		res.send(tasks);
+	} catch (error) {
+		console.error("Error fetching work assignments:", error);
+		res.status(500).send({ message: "Server Error" });
+	}
+});
+// Delete an assigned work by ID
+app.delete("/assignwork/:id", (req, res) => {
+	const { id } = req.params;
+
+	AssignWork.findByIdAndDelete(id)
+		.then(() => {
+			res.send({ message: "Work assignment deleted successfully" });
+		})
+		.catch((error) => {
+			console.error("Error deleting work assignment:", error);
+			res.status(500).send({ message: "Server Error" });
+		});
+});
+//archived scheema
+// Archive work assignment
+app.post("/archivework", (req, res) => {
+	const { _id, name, phone, address, service, message, userId } = req.body;
+
+	const archivedWork = new ArchivedWork({
+		_id,
+		name,
+		phone,
+		address,
+		service,
+		message,
+		userId, // Store the userId in the archive
+	});
+
+	archivedWork
+		.save()
+		.then((savedTask) => {
+			console.log("Archived Work:", savedTask);
+			res.send({ message: "Work archived successfully" });
+		})
+		.catch((error) => {
+			console.error("Error archiving work assignment:", error);
+			res.status(500).send({ message: "Server Error" });
+		});
+});
+//fetch archive
+app.get("/archive/:userId", (req, res) => {
+	const { userId } = req.params;
+	ArchivedWork.find({ userId }) // Use find instead of findOne
+		.then((tasks) => {
+			if (tasks.length > 0) {
+				res.json(tasks);
+			} else {
+				res
+					.status(404)
+					.send({ message: "No archived work found for this user" });
+			}
+		})
+		.catch((error) => {
+			console.error("Error fetching archived work:", error);
+			res.status(500).send({ message: "Server Error" });
+		});
+});
+
 // Start the server
 app.listen(port, () => {
 	console.log(`App is Listening on the port ${port}`);
