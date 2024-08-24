@@ -10,6 +10,7 @@ import UserPageD from './UserPage/UserPage.jsx';
 import Profile from './ProfilePage/Profile.jsx';
 import ComplainForm from './ComplainForm/ComplainForm.jsx';
 import AssignedWork from './AssignedWork/AssignedWork.jsx';
+import UserHome from './UserHome/UserHome.jsx';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         <Route path="/profilepage" element = {<Profile/>}/>
         <Route path="/complain" element = {<ComplainForm/>}/>
         <Route path="/assignedwork" element = {<AssignedWork/>}/>
+        <Route path="/userhome" element = {<UserHome/>}/>
       </Routes>
     </BrowserRouter>
   );
