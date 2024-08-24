@@ -26,11 +26,26 @@ mongoose.connection.on("error", (err) => {
 // Models
 const Users = mongoose.model("Users", {
 	username: String,
+	userId: String,
+	firstName: String,
+	lastName: String,
+	dob: Date,
+	gender: String,
+	location: String,
+	phoneNumber: String,
 	password: String,
 	email: String,
 });
 const Workers = mongoose.model("Workers", {
 	username: String,
+	userId: String,
+	firstName: String,
+	lastName: String,
+	dob: Date,
+	gender: String,
+	location: String,
+	phoneNumber: String,
+
 	password: String,
 	email: String,
 });
@@ -59,24 +74,114 @@ app.post("/signup_user", (req, res) => {
 			res.send({ message: "Server Error" });
 		});
 });
+app.post("/profile_user", (req, res) => {
+	console.log("Updating user profile:", req.body);
+	const {
+		userId,
+		firstName,
+		lastName,
+		dob,
+		gender,
+		location,
+		phoneNumber,
+		email,
+	} = req.body;
 
+	Users.findOneAndUpdate(
+		{ userId },
+		{
+			firstName,
+			lastName,
+			dob,
+			gender,
+			location,
+			phoneNumber,
+			email,
+		},
+		{ new: true, upsert: true } // Upsert to create if doesn't exist
+	)
+		.then(() => {
+			res.status(200).send({ message: "Profile updated successfully" });
+		})
+		.catch((error) => {
+			console.error("Error updating profile:", error);
+			res.status(500).send({ message: "Server Error" });
+		});
+});
+// fetch profile user
+
+app.get("/profile_user/:userId", (req, res) => {
+	const { userId } = req.params;
+	Users.findOne({ userId })
+		.then((user) => {
+			if (user) {
+				res.json(user);
+			} else {
+				res.status(404).send({ message: "User not found" });
+			}
+		})
+		.catch((error) => {
+			console.error("Error fetching user profile:", error);
+			res.status(500).send({ message: "Server Error" });
+		});
+});
+// Sign up worker
 app.post("/signup_worker", (req, res) => {
-	console.log(req.body);
+	console.log("Signing up worker:", req.body);
 	const { username, password, email } = req.body;
 
+	// Ideally, hash the password before saving it
 	const worker = new Workers({
 		username,
-		password,
+		password, // Make sure to hash this in a real app
 		email,
 	});
 
 	worker
 		.save()
 		.then(() => {
-			res.send({ message: "Save Success" });
+			res.status(201).send({ message: "Worker saved successfully" });
 		})
-		.catch(() => {
-			res.send({ message: "Server Error" });
+		.catch((error) => {
+			console.error("Error saving worker:", error);
+			res.status(500).send({ message: "Server Error" });
+		});
+});
+
+// Profile update for worker
+app.post("/profile_worker", (req, res) => {
+	console.log("Updating worker profile:", req.body);
+	const {
+		userId,
+		firstName,
+		lastName,
+		dob,
+		gender,
+		location,
+		phoneNumber,
+		email,
+	} = req.body;
+
+	Workers.findOneAndUpdate(
+		{ userId },
+		{
+			firstName,
+			lastName,
+			dob,
+			gender,
+			location,
+			phoneNumber,
+			email,
+		},
+		{ new: true, upsert: true } // Upsert to create if doesn't exist
+	)
+		.then(() => {
+			console.log("Updated Profile Data:");
+			res.status(200).send({ message: "Profile updated successfully" });
+		})
+		.catch((error) => {
+			console.error("Error updating worker profile:", error);
+			res.status(500).send({ message: "Server Error" });
 		});
 });
 

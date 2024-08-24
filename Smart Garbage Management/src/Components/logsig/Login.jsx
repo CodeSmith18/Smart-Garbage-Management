@@ -63,21 +63,24 @@ const Login = () => {
 							Login
 						</h2>
 						<form onSubmit={handleSubmit} autoComplete="off">
-							{/* <div className="mt-4">
-              <label htmlFor="userType" className="block text-gray-700 text-sm font-bold mb-2">
-                Select User Type:
-              </label>
-              <select
-                id="userType"
-                value={userType}
-                onChange={handleUserTypeChange}
-                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-              >
-                <option value="worker">Worker</option>
-                <option value="client">Client</option>
-                <option value="admin">Admin</option>
-              </select>
-            </div> */}
+							<div className="mt-4">
+								<label
+									htmlFor="userType"
+									className="block text-gray-700 text-sm font-bold mb-2"
+								>
+									Select User Type:
+								</label>
+								<select
+									id="userType"
+									value={userType}
+									onChange={handleUserTypeChange}
+									className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+								>
+									<option value="worker">Worker</option>
+									<option value="client">Client</option>
+									<option value="admin">Admin</option>
+								</select>
+							</div>
 							<div className="mt-4">
 								<input
 									type="text"
