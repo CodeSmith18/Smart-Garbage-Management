@@ -49,6 +49,13 @@ const Workers = mongoose.model("Workers", {
 	password: String,
 	email: String,
 });
+const AssignWork = mongoose.model("assignwork", {
+	name: String,
+	phone: String,
+	address: String,
+	service: String,
+	message: String,
+});
 
 const works = mongoose.model("works", {
 	name: String,
@@ -257,7 +264,38 @@ app.post("/login_worker", (req, res) => {
 		}
 	});
 });
+// assign work
+app.post("/assignwork", (req, res) => {
+	console.log(req.body);
+	const { name, phone, address, service, message } = req.body;
 
+	const workAssignment = new AssignWork({
+		name,
+		phone,
+		address,
+		service,
+		message,
+	});
+
+	workAssignment
+		.save()
+		.then(() => {
+			res.send({ message: "Save Success" });
+		})
+		.catch((error) => {
+			console.error("Error saving work assignment:", error);
+			res.status(500).send({ message: "Server Error" });
+		});
+});
+// Endpoint to get all work assignments
+// app.get("/assignwork", async (req, res) => {
+// 	try {
+// 		const work = await AssignWork.find();
+// 		res.status(200).json(work);
+// 	} catch (error) {
+// 		res.status(500).json({ message: error.message });
+// 	}
+// });
 // Start the server
 app.listen(port, () => {
 	console.log(`App is Listening on the port ${port}`);
