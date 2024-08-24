@@ -38,6 +38,8 @@ const Login = () => {
 						setTimeout(() => {
 							if (userType === "worker") {
 								navigate("/worker");
+							} else if (userType === "RagWork") {
+								navigate("/Rag");
 							} else {
 								navigate("/userpage");
 							}
@@ -81,7 +83,7 @@ const Login = () => {
 								>
 									<option value="worker">Worker</option>
 									<option value="client">Client</option>
-									<option value="admin">Admin</option>
+									<option value="RagWork">RagWork</option>
 								</select>
 							</div>
 							<div className="mt-4">
