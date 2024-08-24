@@ -118,7 +118,7 @@ function UserPage() {
 								<span className="material-icons-outlined float-left pr-2">
 									settings
 								</span>
-								Settings
+								Donate
 								<span className="material-icons-outlined float-right">
 									keyboard_arrow_right
 								</span>
@@ -162,7 +162,7 @@ function UserPage() {
 							</div>
 						</div>
 
-						<div className="flex flex-col sm:flex-row h-64 mt-6">
+						{/* <div className="flex flex-col sm:flex-row h-64 mt-6">
 							<div className="bg-white rounded-xl shadow-lg px-6 py-4 w-full sm:w-4/12 mb-4 sm:mb-0">
 								"Reduce, reuse, recycle isn’t just a slogan; it’s a way of
 								life."
@@ -175,7 +175,7 @@ function UserPage() {
 								"The future of humanity and indeed, all life on earth, depends
 								on us."
 							</div>
-						</div>
+						</div> */}
 					</div>
 				</div>
 

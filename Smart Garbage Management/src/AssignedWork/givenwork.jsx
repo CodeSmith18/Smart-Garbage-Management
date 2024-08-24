@@ -43,28 +43,44 @@ function Givenwork() {
 	};
 
 	return (
-		<div>
-			<div className="border-1 border-black">
-				<h1 className="text-3xl mt-8 ml-4">Pending Assigned Tasks/Complains</h1>
+		<div className="max-w-4xl mx-auto p-6">
+			<div className="text-center border-b-2 border-gray-200 pb-4 mb-8">
+				<h1 className="text-3xl font-bold text-gray-800">
+					Pending Assigned Tasks/Complaints
+				</h1>
 			</div>
-			<div className="flex flex-col items-center justify-center mt-8">
+			<div className="flex flex-col items-center space-y-6">
 				{work.length > 0 ? (
 					work.map((task, index) => (
 						<div
 							key={index}
-							className="bg-white shadow-md rounded p-4 mb-4 w-1/2"
+							className="bg-white shadow-lg rounded-lg p-6 w-full max-w-xl"
 						>
-							<h2 className="text-xl font-bold">{task.name}</h2>
-							<p className="text-gray-700">User ID: {task.userId}</p>{" "}
-							<p className="text-gray-700">Phone: {task.phone}</p>
-							<p className="text-gray-700">Address: {task.address}</p>
-							<p className="text-gray-700">Service: {task.service}</p>
-							<p className="text-gray-700">Message: {task.message}</p>
+							<h2 className="text-2xl font-semibold text-gray-900 mb-2">
+								{task.name}
+							</h2>
+							<div className="text-gray-700">
+								{/* <p className="mb-1">
+									<strong>User ID:</strong> {task.userId}
+								</p> */}
+								<p className="mb-1">
+									<strong>Phone:</strong> {task.phone}
+								</p>
+								<p className="mb-1">
+									<strong>Address:</strong> {task.address}
+								</p>
+								<p className="mb-1">
+									<strong>Service:</strong> {task.service}
+								</p>
+								<p className="mb-1">
+									<strong>Message:</strong> {task.message}
+								</p>
+							</div>
 							<button
 								onClick={() => completeTask(task)}
-								className="bg-green-500 text-white py-1 px-3 rounded hover:bg-red-700 focus:outline-none focus:shadow-outline mt-4"
+								className="mt-4 w-full bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150"
 							>
-								Completed
+								Mark as Completed
 							</button>
 						</div>
 					))
@@ -72,7 +88,6 @@ function Givenwork() {
 					<p className="text-gray-700">No work assigned yet.</p>
 				)}
 			</div>
-			<div className="flex items-center justify-center mt-16"></div>
 		</div>
 	);
 }
