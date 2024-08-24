@@ -29,7 +29,7 @@ const Users = mongoose.model("Users", {
 	userId: String,
 	firstName: String,
 	lastName: String,
-	dob: Date,
+	dob: String,
 	gender: String,
 	location: String,
 	phoneNumber: String,
@@ -41,13 +41,20 @@ const Workers = mongoose.model("Workers", {
 	userId: String,
 	firstName: String,
 	lastName: String,
-	dob: Date,
+	dob: String,
 	gender: String,
 	location: String,
 	phoneNumber: String,
 
 	password: String,
 	email: String,
+});
+
+const works = mongoose.model("works", {
+	name: String,
+	phone: String,
+	location: String,
+	work: String,
 });
 
 // Routes
