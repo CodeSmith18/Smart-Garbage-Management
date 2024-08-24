@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import './App.css';
+import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import "./App.css";
 
 import Login from './Components/logsig/Login.jsx';
 import Landing from './landing_Page/landing.jsx';
@@ -10,7 +10,6 @@ import UserPageD from './UserPage/UserPage.jsx';
 import Profile from './ProfilePage/Profile.jsx';
 import ComplainForm from './ComplainForm/ComplainForm.jsx';
 import AssignedWork from './AssignedWork/AssignedWork.jsx';
-import UserHome from './UserHome/UserHome.jsx';
 
 function App() {
   return (
@@ -25,11 +24,9 @@ function App() {
         <Route path="/profilepage" element = {<Profile/>}/>
         <Route path="/complain" element = {<ComplainForm/>}/>
         <Route path="/assignedwork" element = {<AssignedWork/>}/>
-        <Route path="/userhome" element = {<UserHome/>}/>
       </Routes>
     </BrowserRouter>
   );
 }
-
 
 export default App;
