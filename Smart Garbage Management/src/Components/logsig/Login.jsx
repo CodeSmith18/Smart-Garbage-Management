@@ -11,17 +11,19 @@ const Login = () => {
 	const [userType, setUserType] = useState("worker");
 	const navigate = useNavigate();
 
-  const handleUserTypeChange = (event) => {
-    setUserType(event.target.value);
-  };
+	const handleUserTypeChange = (event) => {
+		setUserType(event.target.value);
+	};
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
-    const url = userType === 'worker' ? 'http://localhost:8000/login_worker' : 'http://localhost:8000/login_user';
-  
+
+    const url = (userType === 'worker') ?
+      'http://localhost:8000/login_worker' :
+      'http://localhost:8000/login_user';
+
     const data = { username, password };
-  
+
     axios.post(url, data)
       .then((res) => {
         if (res.data.message) {
@@ -30,10 +32,10 @@ const Login = () => {
             localStorage.setItem('token', res.data.token);
             localStorage.setItem('userId', res.data.userId);
             localStorage.setItem('userType', userType);
-  
+
             // Delay navigation to allow toast notification to display
             setTimeout(() => {
-              navigate('/userpage', { state: { userName: username } });
+              navigate('/userpage');
             }, 1000); // Adjust delay as needed (in milliseconds)
           }
         }
@@ -43,7 +45,6 @@ const Login = () => {
         toast.error('Login failed. Please check your credentials.');
       });
   };
-  
 
   return (
     <>
@@ -60,7 +61,7 @@ const Login = () => {
             Login
           </h2>
           <form onSubmit={handleSubmit} autoComplete="off">
-            <div className="mt-4">
+            {/* <div className="mt-4">
               <label htmlFor="userType" className="block text-gray-700 text-sm font-bold mb-2">
                 Select User Type:
               </label>
@@ -74,7 +75,7 @@ const Login = () => {
                 <option value="client">Client</option>
                 <option value="admin">Admin</option>
               </select>
-            </div>
+            </div> */}
             <div className="mt-4">
               <input
                 type="text"
