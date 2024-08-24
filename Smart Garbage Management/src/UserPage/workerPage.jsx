@@ -17,7 +17,7 @@ function WorkerPage() {
 	};
 
 	const handleAssignedWorkClick = () => {
-		navigate("/assignedwork");
+		navigate("/givenwork");
 	};
 
 	return (

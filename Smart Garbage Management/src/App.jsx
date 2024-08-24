@@ -12,7 +12,7 @@ import ComplainForm from "./AssignedWork/ComplainForm.jsx";
 import AssignedWork from "./AssignedWork/AssignedWork.jsx";
 import WorkerPage from "./UserPage/workerPage.jsx";
 import WorkForm from "./AssignedWork/giveWork.jsx";
-
+import Givenwork from "./AssignedWork/givenwork.jsx";
 function App() {
 	return (
 		<BrowserRouter>
@@ -24,6 +24,8 @@ function App() {
 				<Route path="/dashboard" element={<AdminDashboard />} />
 				<Route path="/userpage" element={<UserPageD />} />
 				<Route path="/workform" element={<WorkForm />} />
+				<Route path="/worker" element={<WorkerPage />} />
+				<Route path="/givenwork" element={<Givenwork />} />
 
 				<Route path="/profilepage" element={<Profile />} />
 				<Route path="/complain" element={<ComplainForm />} />
@@ -33,4 +35,4 @@ function App() {
 	);
 }
 
-export default App;
+export default App;
