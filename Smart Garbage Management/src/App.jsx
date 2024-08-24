@@ -7,6 +7,9 @@ import Landing from './landing_Page/landing.jsx';
 import Signup from './Components/logsig/Signup.jsx';
 import AdminDashboard from './Dashboard/Dashboard.jsx';
 import UserPageD from './UserPage/UserPage.jsx';
+import Profile from './ProfilePage/Profile.jsx';
+import ComplainForm from './ComplainForm/ComplainForm.jsx';
+import AssignedWork from './AssignedWork/AssignedWork.jsx';
 
 function App() {
   return (
@@ -18,6 +21,9 @@ function App() {
         <Route path="/login" element = {<Login/>}/>
         <Route path="/dashboard" element = {<AdminDashboard/>}/>
         <Route path="/userpage" element = {<UserPageD/>}/>
+        <Route path="/profilepage" element = {<Profile/>}/>
+        <Route path="/complain" element = {<ComplainForm/>}/>
+        <Route path="/assignedwork" element = {<AssignedWork/>}/>
       </Routes>
     </BrowserRouter>
   );
