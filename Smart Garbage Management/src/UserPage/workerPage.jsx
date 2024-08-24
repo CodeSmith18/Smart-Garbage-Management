@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./UserPage.css";
 import Img from "./landing.png";
 
-function UserPage() {
+function WorkerPage() {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const userName = location.state?.userName || "User"; // Default to "User" if name is not available
@@ -17,7 +17,7 @@ function UserPage() {
 	};
 
 	const handleAssignedWorkClick = () => {
-		navigate("/workform");
+		navigate("/assignedwork");
 	};
 
 	return (
@@ -145,7 +145,7 @@ function UserPage() {
 
 							<div className="bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 border rounded-xl w-full sm:w-5/12 ml-0 sm:ml-2 p-6 shadow-lg">
 								<p className="text-4xl sm:text-5xl text-white">
-									Assign Work <br />
+									No Work <br />
 									<strong>10</strong>
 								</p>
 								<button
@@ -205,4 +205,4 @@ function UserPage() {
 	);
 }
 
-export default UserPage;
+export default WorkerPage;
