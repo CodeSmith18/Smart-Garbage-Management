@@ -36,7 +36,8 @@ const NavBar = () => {
 			<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="flex justify-between items-center h-16">
 					<div className="flex-shrink-0">
-						<h1 className="text-2xl font-bold">My Website</h1>
+					<div className="font-bold text-white text-lg sm:text-3xl">
+              		Clean<span className="text-blue-600">Stream</span></div>
 					</div>
 					<div className="">
 						<div className=" p-1 pr-2 ml-10 flex items-baseline space-x-4">
@@ -44,7 +45,7 @@ const NavBar = () => {
 								onClick={handleSignupClick}
 								className="px-4 py-2 text-lg font-semibold text-white bg-gray-800 rounded-lg transition-all transform hover:bg-gray-700 hover:-translate-y-0.5"
 							>
-								Login
+								SignUp
 							</button>
 						</div>
 					</div>

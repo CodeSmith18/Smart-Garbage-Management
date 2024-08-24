@@ -41,6 +41,28 @@ function ComplainForm() {
           />
         </div>
         <div className="mb-4">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="hostel">
+            Hostel
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="hostel"
+            type="text"
+            placeholder="Enter your hostel"
+          />
+        </div>
+        <div className="mb-4">
+          <label className="block text-gray-700 font-bold mb-2" htmlFor="roomNo">
+            Room No.
+          </label>
+          <input
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            id="roomNo"
+            type="text"
+            placeholder="Enter your room number"
+          />
+        </div>
+        <div className="mb-4">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="date">
             Date
           </label>
@@ -72,10 +94,10 @@ function ComplainForm() {
             name="service"
           >
             <option value="">Select a service</option>
-            <option value="haircut">Room Cleaning</option>
-            <option value="coloring">Pest Control</option>
-            <option value="styling">Washroom Cleaning</option>
-            <option value="facial">Lobby Cleaning</option>
+            <option value="room_cleaning">Room Cleaning</option>
+            <option value="pest_control">Pest Control</option>
+            <option value="washroom_cleaning">Washroom Cleaning</option>
+            <option value="lobby_cleaning">Lobby Cleaning</option>
           </select>
         </div>
         <div className="mb-4">

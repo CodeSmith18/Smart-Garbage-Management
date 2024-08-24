@@ -11,57 +11,51 @@ const Login = () => {
   const [userType, setUserType] = useState('worker');
   const navigate = useNavigate();
 
-  const handleUserTypeChange = (event) => {
-    setUserType(event.target.value);
-  };
+  const handleUserTypeChange = (e) => setUserType(e.target.value);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = (userType === 'worker') ?
-      'http://localhost:8000/login_worker' :
-      'http://localhost:8000/login_user';
+    const url = userType === 'worker' 
+      ? 'http://localhost:8000/login_worker' 
+      : 'http://localhost:8000/login_user';
 
-    const data = { username, password };
+    try {
+      const response = await axios.post(url, { username, password });
 
-    axios.post(url, data)
-      .then((res) => {
-        if (res.data.message) {
-          toast.success(res.data.message);
-          if (res.data.token) {
-            localStorage.setItem('token', res.data.token);
-            localStorage.setItem('userId', res.data.userId);
-            localStorage.setItem('userType', userType);
+      if (response.data.message) {
+        toast.success(response.data.message);
+        
+        if (response.data.token) {
+          localStorage.setItem('token', response.data.token);
+          localStorage.setItem('userId', response.data.userId);
+          localStorage.setItem('userType', userType);
 
-            // Delay navigation to allow toast notification to display
-            setTimeout(() => {
-              navigate('/userpage');
-            }, 1000); // Adjust delay as needed (in milliseconds)
-          }
+          // Navigate with state
+          setTimeout(() => {
+            navigate('/userpage', { state: { userName: username } });
+          }, 1000); // Adjust delay if needed
         }
-      })
-      .catch((error) => {
-        console.error('There was an error during login:', error);
-        toast.error('Login failed. Please check your credentials.');
-      });
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      toast.error('Login failed. Please check your credentials.');
+    }
   };
 
   return (
-    <>
     <div className="py-20">
       <div className="flex bg-white rounded-lg shadow-lg overflow-hidden mx-auto max-w-sm lg:max-w-4xl">
         <div
           className="hidden lg:block lg:w-1/2 bg-cover"
-          style={{
-            backgroundImage: `url(${Img})`,
-          }}
+          style={{ backgroundImage: `url(${Img})` }}
         ></div>
         <div className="w-full p-8 lg:w-1/2">
           <h2 className="text-2xl font-semibold text-gray-700 text-center">
             Login
           </h2>
           <form onSubmit={handleSubmit} autoComplete="off">
-            {/* <div className="mt-4">
+            <div className="mt-4">
               <label htmlFor="userType" className="block text-gray-700 text-sm font-bold mb-2">
                 Select User Type:
               </label>
@@ -69,13 +63,13 @@ const Login = () => {
                 id="userType"
                 value={userType}
                 onChange={handleUserTypeChange}
-                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                className="bg-gray-200 text-gray-700 border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
               >
                 <option value="worker">Worker</option>
                 <option value="client">Client</option>
                 <option value="admin">Admin</option>
               </select>
-            </div> */}
+            </div>
             <div className="mt-4">
               <input
                 type="text"
@@ -83,7 +77,7 @@ const Login = () => {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                className="bg-gray-200 text-gray-700 border border-gray-300 rounded py-2 px-4 block w-full"
                 required
               />
             </div>
@@ -94,7 +88,7 @@ const Login = () => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+                className="bg-gray-200 text-gray-700 border border-gray-300 rounded py-2 px-4 block w-full"
                 required
               />
             </div>
@@ -108,7 +102,7 @@ const Login = () => {
             </div>
             <div className="mt-4 flex items-center justify-between">
               <span className="border-b w-1/5 md:w-1/4"></span>
-              <Link to="/signup" className=" flex justify-center items-center text-xs text-gray-500 uppercase">
+              <Link to="/signup" className="text-xs text-gray-500 uppercase">
                 Create account
               </Link>
               <span className="border-b w-1/5 md:w-1/4"></span>
@@ -118,7 +112,6 @@ const Login = () => {
       </div>
       <ToastContainer />
     </div>
-    </>
   );
 };
 
