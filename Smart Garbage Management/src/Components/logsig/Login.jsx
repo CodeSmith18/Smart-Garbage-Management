@@ -61,7 +61,7 @@ const Login = () => {
             Login
           </h2>
           <form onSubmit={handleSubmit} autoComplete="off">
-            {/* <div className="mt-4">
+            <div className="mt-4">
               <label htmlFor="userType" className="block text-gray-700 text-sm font-bold mb-2">
                 Select User Type:
               </label>
@@ -75,7 +75,7 @@ const Login = () => {
                 <option value="client">Client</option>
                 <option value="admin">Admin</option>
               </select>
-            </div> */}
+            </div>
             <div className="mt-4">
               <input
                 type="text"
