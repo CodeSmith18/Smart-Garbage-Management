@@ -24,10 +24,11 @@ function App() {
 				<Route path="/dashboard" element={<AdminDashboard />} />
 				<Route path="/userpage" element={<UserPageD />} />
 				<Route path="/workform" element={<WorkForm />} />
-
 				<Route path="/profilepage" element={<Profile />} />
 				<Route path="/complain" element={<ComplainForm />} />
 				<Route path="/assignedwork" element={<AssignedWork />} />
+				<Route path="/workerPage" element={<WorkerPage />} />
+
 			</Routes>
 		</BrowserRouter>
 	);

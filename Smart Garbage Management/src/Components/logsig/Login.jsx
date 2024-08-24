@@ -35,7 +35,11 @@ const Login = () => {
 
             // Delay navigation to allow toast notification to display
             setTimeout(() => {
-              navigate("/userpage");
+              if (userType === "worker") {
+                navigate("/workerpage", { state: { userName: username } });
+              } else if (userType === "client") {
+                navigate("/userpage", { state: { userName: username } });
+              }
             }, 1000); // Adjust delay as needed (in milliseconds)
           }
         }
