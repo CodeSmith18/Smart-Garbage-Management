@@ -13,6 +13,7 @@ import AssignedWork from "./AssignedWork/AssignedWork.jsx";
 import WorkerPage from "./UserPage/workerPage.jsx";
 import WorkForm from "./AssignedWork/giveWork.jsx";
 import Givenwork from "./AssignedWork/givenwork.jsx";
+import Completed from "./Components/completed/completed.jsx";
 function App() {
 	return (
 		<BrowserRouter>
@@ -26,6 +27,7 @@ function App() {
 				<Route path="/workform" element={<WorkForm />} />
 				<Route path="/worker" element={<WorkerPage />} />
 				<Route path="/givenwork" element={<Givenwork />} />
+				<Route path="/completed" element={<Completed />} />
 
 				<Route path="/profilepage" element={<Profile />} />
 				<Route path="/complain" element={<ComplainForm />} />

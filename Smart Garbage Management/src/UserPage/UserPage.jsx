@@ -19,7 +19,9 @@ function UserPage() {
 	const handleAssignedWorkClick = () => {
 		navigate("/workform");
 	};
-
+	const completed = () => {
+		navigate("/completed");
+	};
 	return (
 		<>
 			<link
@@ -85,7 +87,10 @@ function UserPage() {
 									keyboard_arrow_right
 								</span>
 							</button>
-							<button className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full">
+							<button
+								onClick={completed}
+								className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full"
+							>
 								<span className="material-icons-outlined float-left pr-2">
 									file_copy
 								</span>
@@ -179,7 +184,7 @@ function UserPage() {
 					<div className="flex justify-around">
 						<button
 							onClick={handleLoginClick}
-							className="flex flex-col items-center text-gray-600 hover:text-blue-600"
+							className=" flex-col items-center text-gray-600 hover:text-blue-600"
 						>
 							<span className="material-icons-outlined">dashboard</span>
 							Home

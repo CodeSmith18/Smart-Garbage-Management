@@ -365,6 +365,25 @@ app.post("/archivework", (req, res) => {
 			res.status(500).send({ message: "Server Error" });
 		});
 });
+//fetch archive
+app.get("/archive/:userId", (req, res) => {
+	const { userId } = req.params;
+	ArchivedWork.find({ userId }) // Use find instead of findOne
+		.then((tasks) => {
+			if (tasks.length > 0) {
+				res.json(tasks);
+			} else {
+				res
+					.status(404)
+					.send({ message: "No archived work found for this user" });
+			}
+		})
+		.catch((error) => {
+			console.error("Error fetching archived work:", error);
+			res.status(500).send({ message: "Server Error" });
+		});
+});
+
 // Start the server
 app.listen(port, () => {
 	console.log(`App is Listening on the port ${port}`);
