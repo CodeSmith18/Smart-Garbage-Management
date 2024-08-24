@@ -184,7 +184,22 @@ app.post("/profile_worker", (req, res) => {
 			res.status(500).send({ message: "Server Error" });
 		});
 });
-
+//fetch worker
+app.get("/profile_worker/:userId", (req, res) => {
+	const { userId } = req.params;
+	Workers.findOne({ userId }) // Use Workers instead of Users
+		.then((worker) => {
+			if (worker) {
+				res.json(worker);
+			} else {
+				res.status(404).send({ message: "Worker not found" });
+			}
+		})
+		.catch((error) => {
+			console.error("Error fetching worker profile:", error);
+			res.status(500).send({ message: "Server Error" });
+		});
+});
 app.post("/login_user", (req, res) => {
 	console.log(req.body);
 	const username = req.body.username;
