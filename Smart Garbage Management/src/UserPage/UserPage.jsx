@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import "./UserPage.css";
 import Img from "./landing.png";
@@ -6,7 +6,21 @@ import Img from "./landing.png";
 function UserPage() {
 	const navigate = useNavigate();
 	const location = useLocation();
-	const userName = location.state?.userName || "User"; // Default to "User" if name is not available
+	const userName = location.state?.userName || "User";
+	const {
+		firstName,
+		phoneNumber,
+		location: userLocation,
+	} = location.state || {};
+	const [showModal, setShowModal] = useState(false);
+	const [actionType, setActionType] = useState("DELETE"); // Default to DELETE
+	const [rags, setRags] = useState([]);
+
+	useEffect(() => {
+		// Load data from local storage on component mount
+		const storedRags = JSON.parse(localStorage.getItem("rags")) || [];
+		setRags(storedRags);
+	}, []);
 
 	const handleLoginClick = () => {
 		navigate("/");
@@ -19,9 +33,91 @@ function UserPage() {
 	const handleAssignedWorkClick = () => {
 		navigate("/workform");
 	};
-	const completed = () => {
+
+	const handleCompletedClick = () => {
 		navigate("/completed");
 	};
+
+	const handleRemoveRagClick = () => {
+		setActionType("DELETE");
+		setShowModal(true);
+	};
+
+	const handleAddRagClick = () => {
+		setActionType("POST");
+		setShowModal(true);
+	};
+
+	const handleCloseModal = () => {
+		setShowModal(false);
+	};
+
+	const handleConfirmAction = async () => {
+		if (actionType === "POST") {
+			// Store data in backend
+			const newRag = {
+				name: firstName,
+				phone: phoneNumber,
+				location: userLocation,
+			};
+			try {
+				const response = await fetch("http://localhost:8000/api/rag", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(newRag),
+				});
+				const data = await response.json();
+				if (response.ok) {
+					// Update local storage if successful
+					const updatedRags = [...rags, newRag];
+					localStorage.setItem("rags", JSON.stringify(updatedRags));
+					setRags(updatedRags);
+					console.log("Rag entry stored successfully");
+				} else {
+					console.error(data.error);
+				}
+			} catch (error) {
+				console.error("Error storing rag entry:", error);
+			}
+		} else if (actionType === "DELETE") {
+			// Remove data from backend
+			const ragToDelete = {
+				name: firstName,
+				phone: phoneNumber,
+				location: userLocation,
+			};
+			try {
+				const response = await fetch("http://localhost:8000/api/rag", {
+					method: "DELETE",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify(ragToDelete),
+				});
+				const data = await response.json();
+				if (response.ok) {
+					// Update local storage if successful
+					const updatedRags = rags.filter(
+						(rag) =>
+							rag.name !== firstName ||
+							rag.phone !== phoneNumber ||
+							rag.location !== userLocation
+					);
+					localStorage.setItem("rags", JSON.stringify(updatedRags));
+					setRags(updatedRags);
+					console.log("Rag entry removed successfully");
+				} else {
+					console.error(data.error);
+				}
+			} catch (error) {
+				console.error("Error removing rag entry:", error);
+			}
+		}
+		setShowModal(false);
+	};
+
 	return (
 		<>
 			<link
@@ -88,13 +184,39 @@ function UserPage() {
 								</span>
 							</button>
 							<button
-								onClick={completed}
+								onClick={handleCompletedClick}
 								className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full"
 							>
 								<span className="material-icons-outlined float-left pr-2">
 									file_copy
 								</span>
 								Completed Work
+								<span className="material-icons-outlined float-right">
+									keyboard_arrow_right
+								</span>
+							</button>
+							{/* Add Rag Entry Button */}
+							<button
+								onClick={handleAddRagClick}
+								className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full"
+							>
+								<span className="material-icons-outlined float-left pr-2">
+									add
+								</span>
+								Add Rag Entry
+								<span className="material-icons-outlined float-right">
+									keyboard_arrow_right
+								</span>
+							</button>
+							{/* Remove Rag Entry Button */}
+							<button
+								onClick={handleRemoveRagClick}
+								className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full"
+							>
+								<span className="material-icons-outlined float-left pr-2">
+									remove
+								</span>
+								Remove Rag Entry
 								<span className="material-icons-outlined float-right">
 									keyboard_arrow_right
 								</span>
@@ -161,50 +283,37 @@ function UserPage() {
 								</button>
 							</div>
 						</div>
-
-						{/* <div className="flex flex-col sm:flex-row h-64 mt-6">
-							<div className="bg-white rounded-xl shadow-lg px-6 py-4 w-full sm:w-4/12 mb-4 sm:mb-0">
-								"Reduce, reuse, recycle isn’t just a slogan; it’s a way of
-								life."
-							</div>
-							<div className="bg-white rounded-xl shadow-lg mx-0 sm:mx-6 px-6 py-4 w-full sm:w-4/12 mb-4 sm:mb-0">
-								"We do not inherit the earth from our ancestors, we borrow it
-								from our children."
-							</div>
-							<div className="bg-white rounded-xl shadow-lg px-6 py-4 w-full sm:w-4/12">
-								"The future of humanity and indeed, all life on earth, depends
-								on us."
-							</div>
-						</div> */}
 					</div>
 				</div>
 
-				{/* Footer (for small screens) */}
-				<div className="block sm:hidden w-full mt-auto py-4 px-6 bg-gray-200 shadow-md">
-					<div className="flex justify-around">
-						<button
-							onClick={handleLoginClick}
-							className=" flex-col items-center text-gray-600 hover:text-blue-600"
-						>
-							<span className="material-icons-outlined">dashboard</span>
-							Home
-						</button>
-						<button
-							onClick={handleAssignedWorkClick}
-							className="flex flex-col items-center text-gray-600 hover:text-blue-600"
-						>
-							<span className="material-icons-outlined">tune</span>
-							Work
-						</button>
-						<button
-							onClick={handleProfileClick}
-							className="flex flex-col items-center text-gray-600 hover:text-blue-600"
-						>
-							<span className="material-icons-outlined">face</span>
-							Profile
-						</button>
+				{/* Modal */}
+				{showModal && (
+					<div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-50 z-50">
+						<div className="bg-white p-6 rounded-lg shadow-lg w-80">
+							<h2 className="text-xl font-bold mb-4">
+								{actionType === "POST" ? "Add Rag Entry" : "Remove Rag Entry"}
+							</h2>
+							<p className="mb-4">
+								Are you sure you want to {actionType.toLowerCase()} the rag
+								entry for {firstName}?
+							</p>
+							<div className="flex justify-between">
+								<button
+									onClick={handleConfirmAction}
+									className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+								>
+									Confirm
+								</button>
+								<button
+									onClick={handleCloseModal}
+									className="bg-gray-300 text-gray-800 px-4 py-2 rounded-lg hover:bg-gray-400"
+								>
+									Cancel
+								</button>
+							</div>
+						</div>
 					</div>
-				</div>
+				)}
 			</div>
 		</>
 	);

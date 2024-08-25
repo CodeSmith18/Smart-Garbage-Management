@@ -74,6 +74,11 @@ const ArchivedWork = mongoose.model("ArchivedWork", {
 	message: String,
 	archivedAt: { type: Date, default: Date.now },
 });
+const Rag = mongoose.model("Rag", {
+	name: String,
+	phone: String,
+	location: String,
+});
 
 // Routes
 app.get("/", (req, res) => {
@@ -382,6 +387,64 @@ app.get("/archive/:userId", (req, res) => {
 			console.error("Error fetching archived work:", error);
 			res.status(500).send({ message: "Server Error" });
 		});
+});
+
+//rag post
+
+app.post("/api/rag", async (req, res) => {
+	try {
+		const { name, phone, location } = req.body;
+
+		const newRag = new Rag({ name, phone, location });
+		await newRag.save();
+		console.log("Data saved successfully", newRag);
+
+		res.status(201).json({ message: "Data saved successfully" });
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+//get rag
+
+app.get("/api/rag", async (req, res) => {
+	try {
+		const rags = await Rag.find(); // Retrieve all Rags from the database
+		res.status(200).json(rags); // Send the data as a JSON response
+	} catch (error) {
+		res.status(500).json({ error: "Server error" });
+	}
+});
+//rag delete
+// DELETE request to remove a Rag entry
+app.delete("/api/rag", async (req, res) => {
+	try {
+		const { name, phone, location } = req.body;
+
+		// Log the received data
+		console.log("Received data:", req.body);
+
+		// Check if all required fields are provided
+		if (!name || !phone || !location) {
+			return res.status(400).json({ error: "All fields are required" });
+		}
+
+		// Perform the delete operation
+		const deletedRag = await Rag.findOneAndDelete({ name, phone, location });
+
+		// If no document was found to delete, return a 404 error
+		if (!deletedRag) {
+			return res.status(404).json({ error: "Rag entry not found" });
+		}
+
+		// Success
+		res
+			.status(200)
+			.json({ message: "Rag entry deleted successfully", deletedRag });
+	} catch (err) {
+		// Log the error and return a 500 error with a message
+		console.error("Deletion error:", err.message);
+		res.status(500).json({ error: "Failed to delete Rag entry" });
+	}
 });
 
 // Start the server

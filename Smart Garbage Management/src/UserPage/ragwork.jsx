@@ -1,6 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 function Rag() {
+	const [rags, setRags] = useState([]);
+
+	// Fetch data from the backend when the component mounts
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const response = await fetch("http://localhost:8000/api/rag");
+				if (response.ok) {
+					const data = await response.json();
+					console.log("Fetched data:", data); // Log the data
+					setRags(data);
+				} else {
+					console.error("Failed to fetch data");
+				}
+			} catch (error) {
+				console.error("Error fetching data:", error);
+			}
+		};
+
+		fetchData();
+	}, []);
+
 	return (
 		<div className="flex flex-col min-h-screen bg-gray-100 sm:flex-row">
 			{/* Sidebar (only visible on large screens) */}
@@ -44,53 +66,13 @@ function Rag() {
 
 				{/* Cards */}
 				<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-					{/* Card 1 */}
-					<div className="bg-white p-6 rounded-lg shadow-md">
-						<h2 className="text-xl font-bold mb-2">Overview</h2>
-						<p className="text-gray-700">
-							View the summary of your recent activity and tasks.
-						</p>
-					</div>
-
-					{/* Card 2 */}
-					<div className="bg-white p-6 rounded-lg shadow-md">
-						<h2 className="text-xl font-bold mb-2">Tasks</h2>
-						<p className="text-gray-700">
-							Manage your tasks and track your progress.
-						</p>
-					</div>
-
-					{/* Card 3 */}
-					<div className="bg-white p-6 rounded-lg shadow-md">
-						<h2 className="text-xl font-bold mb-2">Messages</h2>
-						<p className="text-gray-700">
-							Check your messages and respond to requests.
-						</p>
-					</div>
-
-					{/* Card 4 */}
-					<div className="bg-white p-6 rounded-lg shadow-md">
-						<h2 className="text-xl font-bold mb-2">Reports</h2>
-						<p className="text-gray-700">
-							Generate and download reports based on your activity.
-						</p>
-					</div>
-
-					{/* Card 5 */}
-					<div className="bg-white p-6 rounded-lg shadow-md">
-						<h2 className="text-xl font-bold mb-2">Profile</h2>
-						<p className="text-gray-700">
-							Update your profile and account settings.
-						</p>
-					</div>
-
-					{/* Card 6 */}
-					<div className="bg-white p-6 rounded-lg shadow-md">
-						<h2 className="text-xl font-bold mb-2">Support</h2>
-						<p className="text-gray-700">
-							Contact support or access the help center.
-						</p>
-					</div>
+					{rags.map((rag, index) => (
+						<div key={index} className="bg-white p-6 rounded-lg shadow-md">
+							<h2 className="text-xl font-bold mb-2">{rag.name}</h2>
+							<p className="text-gray-700">Phone: {rag.phone}</p>
+							<p className="text-gray-700">Location: {rag.location}</p>
+						</div>
+					))}
 				</div>
 			</div>
 
