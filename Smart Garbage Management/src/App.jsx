@@ -12,7 +12,7 @@ import ComplainForm from "./AssignedWork/ComplainForm.jsx";
 import AssignedWork from "./AssignedWork/AssignedWork.jsx";
 import WorkerPage from "./UserPage/workerPage.jsx";
 import WorkForm from "./AssignedWork/giveWork.jsx";
-import Map from "./Components/map/map.jsx";
+import MapComponent from "./Components/map/map.jsx";
 
 function App() {
 	return (
@@ -29,7 +29,7 @@ function App() {
 				<Route path="/profilepage" element={<Profile />} />
 				<Route path="/complain" element={<ComplainForm />} />
 				<Route path="/assignedwork" element={<AssignedWork />} />
-				<Route path="/map" element={<Map />} />
+				<Route path="/map" element={<MapComponent />} />
 			</Routes>
 		</BrowserRouter>
 	);

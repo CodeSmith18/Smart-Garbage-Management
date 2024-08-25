@@ -1,224 +1,122 @@
-// import mapboxgl from 'mapbox-gl';
-// import { useEffect, useRef, useState } from 'react';
-
-// mapboxgl.accessToken = 'pk.eyJ1Ijoicml0aWsxODciLCJhIjoiY20wODU2aWRoMDd6MTJqc2Jld3JpMWdvcyJ9.ibaRYakkovXq5U40CxTIcg';
-
-// const Map = () => {
-//     const mapContainer = useRef(null);
-//     const map = useRef(null);
-//     const [lng, setLng] = useState(-70.9);
-//     const [lat, setLat] = useState(42.35);
-//     const [zoom, setZoom] = useState(9);
-
-//     useEffect(() => {
-//         if (map.current) return; // Initialize map only once
-//         map.current = new mapboxgl.Map({
-//             container: mapContainer.current,
-//             style: 'mapbox://styles/mapbox/streets-v12',
-//             center: [lng, lat],
-//             zoom: zoom
-//         });
-
-//         // Setup event listener after map initialization
-//         map.current.on('move', () => {
-//             setLng(map.current.getCenter().lng.toFixed(4));
-//             setLat(map.current.getCenter().lat.toFixed(4));
-//             setZoom(map.current.getZoom().toFixed(2));
-//         });
-//     }, []); // Empty dependency array to run only on the first render
-
-//     return (
-//         <div>
-//             <div className='sidebar'>
-//                 Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
-//             </div>
-//             <div ref={mapContainer} className="map-container"></div>
-//         </div>
-//     );
-// }
-
-// export default Map;
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useCallback, useState } from 'react';
 import mapboxgl from 'mapbox-gl';
-import * as turf from '@turf/turf';
 import 'mapbox-gl/dist/mapbox-gl.css';
+import * as turf from '@turf/turf';
 
-const Map = () => {
-  const [map, setMap] = useState(null);
-  const [dropoffs, setDropoffs] = useState(turf.featureCollection([]));
-  const [pointHopper, setPointHopper] = useState({});
+mapboxgl.accessToken = 'pk.eyJ1Ijoicml0aWsxODciLCJhIjoiY20wOHEzNXVsMWFsbzJsczRhYjN4bmwyayJ9.MAV7j_ty1QAvYoRM1yMMqQ';
+
+function Mapp() {
+  const mapContainer = useRef(null);
+  const [coordinates, setCoordinates] = useState([]);
 
   useEffect(() => {
-    const truckLocation = [-83.093, 42.376];
-    const warehouseLocation = [-83.083, 42.363];
-    const lastAtRestaurant = Date.now(); // Example timestamp
-
-    // GeoJSON data for the warehouse location
-    const warehouse = {
-      type: 'FeatureCollection',
-      features: [
-        {
-          type: 'Feature',
-          geometry: {
-            type: 'Point',
-            coordinates: warehouseLocation,
-          },
-        },
-      ],
-    };
-
-    // Add your access token
-    mapboxgl.accessToken =
-      'pk.eyJ1Ijoicml0aWsxODciLCJhIjoiY20wODU2aWRoMDd6MTJqc2Jld3JpMWdvcyJ9.ibaRYakkovXq5U40CxTIcg';
-
-    // Initialize a map
-    const mapInstance = new mapboxgl.Map({
-      container: 'map', // container id
-      style: 'mapbox://styles/mapbox/light-v11', // stylesheet location
-      center: truckLocation, // starting position
-      zoom: 12, // starting zoom
+    const map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: 'mapbox://styles/mapbox/light-v11',
+      center: [-96.5108, 39.1184], // Center of the map
+      zoom: 12,
     });
 
-    mapInstance.on('load', () => {
-      setMap(mapInstance);
-
-      // Add a marker for the truck location
-      const marker = document.createElement('div');
-      marker.classList = 'truck';
-
-      new mapboxgl.Marker(marker).setLngLat(truckLocation).addTo(mapInstance);
-
-      // Add a circle layer for the warehouse
-      mapInstance.addLayer({
-        id: 'warehouse',
+    map.on('load', () => {
+      // Example locations
+      const FromLocation = [-112.073555, 33.44793];
+      const ToLocation = [-110.965274, 32.228759];
+      
+      const from = turf.featureCollection([turf.point(FromLocation)]);
+      const to = turf.featureCollection([turf.point(ToLocation)]);
+      
+      map.addLayer({
+        id: 'from',
         type: 'circle',
         source: {
-          data: warehouse,
           type: 'geojson',
+          data: from,
         },
         paint: {
-          'circle-radius': 20,
-          'circle-color': 'white',
-          'circle-stroke-color': '#3887be',
+          'circle-radius': 10,
+          'circle-color': 'blue',
+          'circle-stroke-color': 'blue',
           'circle-stroke-width': 3,
         },
       });
 
-      // Add a symbol layer on top of the circle layer for the warehouse
-      mapInstance.addLayer({
-        id: 'warehouse-symbol',
-        type: 'symbol',
+      map.addLayer({
+        id: 'to',
+        type: 'circle',
         source: {
-          data: warehouse,
           type: 'geojson',
-        },
-        layout: {
-          'icon-image': 'grocery', // Ensure that the icon 'grocery' is available in the sprite
-          'icon-size': 1.5,
+          data: to,
         },
         paint: {
-          'text-color': '#3887be',
+          'circle-radius': 10,
+          'circle-color': 'red',
+          'circle-stroke-color': 'red',
+          'circle-stroke-width': 3,
         },
       });
 
-      // Add a layer for dropoff symbols
-      mapInstance.addLayer({
-        id: 'dropoffs-symbol',
-        type: 'symbol',
-        source: {
-          data: dropoffs,
-          type: 'geojson',
-        },
-        layout: {
-          'icon-allow-overlap': true,
-          'icon-ignore-placement': true,
-          'icon-image': 'marker-15', // Use a suitable marker icon
-        },
-      });
-
-      // Listen for a click on the map
-      mapInstance.on('click', addWaypoints);
+      // Fetch route coordinates
+      fetchRoute(FromLocation, ToLocation);
     });
 
-    const addWaypoints = async (event) => {
-      const coordinates = mapInstance.unproject(event.point);
-      await newDropoff(coordinates);
-      updateDropoffs(dropoffs);
-    };
+    async function fetchRoute(from, to) {
+      try {
+        const response = await fetch(
+          `https://api.mapbox.com/directions/v5/mapbox/driving/${from.join(',')};${to.join(',')}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`
+        );
+        const data = await response.json();
+        const routeCoordinates = data.routes[0].geometry.coordinates;
+        setCoordinates(routeCoordinates);
 
-    const newDropoff = async (coordinates) => {
-      const newFeature = {
-        type: 'Feature',
-        geometry: {
-          type: 'Point',
-          coordinates: [coordinates.lng, coordinates.lat],
-        },
-      };
-
-      setDropoffs((prevDropoffs) => {
-        const updatedDropoffs = turf.featureCollection([...prevDropoffs.features, newFeature]);
-        return updatedDropoffs;
-      });
-
-      // Add the new dropoff point to the pointHopper
-      setPointHopper((prevPointHopper) => {
-        const newPointHopper = { ...prevPointHopper };
-        newPointHopper[Date.now()] = newFeature;
-        return newPointHopper;
-      });
-    };
-
-    const updateDropoffs = () => {
-      if (mapInstance && mapInstance.getSource('dropoffs-symbol')) {
-        mapInstance.getSource('dropoffs-symbol').setData(dropoffs);
+        // Call optimization API
+        fetchOptimizedRoute(routeCoordinates);
+      } catch (error) {
+        console.error('Error fetching route:', error);
       }
-    };
+    }
 
-    // Function to assemble the query URL for the Optimization API
-    const assembleQueryURL = () => {
-      const coordinates = [truckLocation];
-      const distributions = [];
-      const keepTrack = [truckLocation];
-
-      const restJobs = Object.keys(pointHopper).map((key) => pointHopper[key]);
-
-      if (restJobs.length > 0) {
-        const needToPickUp =
-          restJobs.filter((d) => d.properties.orderTime > lastAtRestaurant).length > 0;
-
-        if (needToPickUp) {
-          const restaurantIndex = coordinates.length;
-          coordinates.push(warehouseLocation);
-          keepTrack.push(pointHopper.warehouse);
-        }
-
-        for (const job of restJobs) {
-          keepTrack.push(job);
-          coordinates.push(job.geometry.coordinates);
-
-          if (needToPickUp && job.properties.orderTime > lastAtRestaurant) {
-            distributions.push(`${restaurantIndex},${coordinates.length - 1}`);
-          }
-        }
+    async function fetchOptimizedRoute(coords) {
+      if (coords.length > 12) {
+        coords.splice(1, coords.length - 12); // Limit to 12 coordinates
       }
 
-      return `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${coordinates.join(
-        ';'
-      )}?distributions=${distributions.join(
-        ';'
-      )}&overview=full&steps=true&geometries=geojson&source=first&access_token=${
-        mapboxgl.accessToken
-      }`;
-    };
+      try {
+        const response = await fetch(
+          `https://api.mapbox.com/optimized-trips/v1/mapbox/driving/${coords.join(';')}?overview=full&steps=true&geometries=geojson&roundtrip=false&source=first&destination=last&access_token=${mapboxgl.accessToken}`
+        );
+        const data = await response.json();
+        const routeGeoJSON = turf.featureCollection([
+          turf.feature(data.trips[0].geometry),
+        ]);
 
-    return () => mapInstance.remove(); // Cleanup on unmount
-  }, [dropoffs, pointHopper]);
+        if (map.current.getSource('route')) {
+          map.current.getSource('route').setData(routeGeoJSON);
+        } else {
+          map.current.addSource('route', {
+            type: 'geojson',
+            data: routeGeoJSON,
+          });
+          map.current.addLayer({
+            id: 'routeline-active',
+            type: 'line',
+            source: 'route',
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round',
+            },
+            paint: {
+              'line-color': '#0E3464',
+              'line-width': ['interpolate', ['linear'], ['zoom'], 12, 3, 22, 12],
+            },
+          });
+        }
+      } catch (error) {
+        console.error('Error fetching optimized route:', error);
+      }
+    }
+  }, []);
 
-  return <div id="map" style={{ position: 'absolute', inset: 0 }}></div>;
-};
+  return <div id="map" ref={mapContainer} style={{ width: '100%', height: '100vh' }} />;
+}
 
-export default Map;
-
- 
-
-
+export default Mapp;

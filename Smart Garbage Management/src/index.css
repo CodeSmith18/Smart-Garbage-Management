@@ -1,30 +1,20 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Required Mapbox CSS */
+@import 'mapbox-gl/dist/mapbox-gl.css';
 
-.map-container {
-    height: 400px;
+/* Set the height and width of the map container */
+#map {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
 }
 
-.sidebar {
-    background-color: rgb(35 55 75 / 90%);
-    color: #fff;
-    padding: 6px 12px;
-    font-family: monospace;
-    z-index: 1;
-    position: absolute;
-    top: 0;
-    left: 0;
-    margin: 12px;
-    border-radius: 4px;
-  }
-
-  .truck {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #fff;
-    border-radius: 50%;
-    background: #3887be;
-    pointer-events: none;
-  }
-  
+/* Custom truck marker styling */
+.truck {
+  background-image: url('https://docs.mapbox.com/mapbox-gl-js/assets/custom_marker.png'); /* Example marker image */
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  cursor: pointer;
+}
