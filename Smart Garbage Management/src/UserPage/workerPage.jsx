@@ -20,6 +20,10 @@ function WorkerPage() {
 		navigate("/givenwork");
 	};
 
+	const handleDonateClick = () => {
+		window.location.href = "http://localhost:3000/";
+	};
+
 	return (
 		<>
 			<link
@@ -109,7 +113,10 @@ function WorkerPage() {
 									keyboard_arrow_right
 								</span>
 							</button>
-							<button className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full">
+							<button
+								onClick={handleDonateClick}
+								className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full"
+							>
 								<span className="material-icons-outlined float-left pr-2">
 									settings
 								</span>
@@ -156,21 +163,6 @@ function WorkerPage() {
 								</button>
 							</div>
 						</div>
-
-						{/* <div className="flex flex-col sm:flex-row h-64 mt-6">
-							<div className="bg-white rounded-xl shadow-lg px-6 py-4 w-full sm:w-4/12 mb-4 sm:mb-0">
-								"Reduce, reuse, recycle isn’t just a slogan; it’s a way of
-								life."
-							</div>
-							<div className="bg-white rounded-xl shadow-lg mx-0 sm:mx-6 px-6 py-4 w-full sm:w-4/12 mb-4 sm:mb-0">
-								"We do not inherit the earth from our ancestors, we borrow it
-								from our children."
-							</div>
-							<div className="bg-white rounded-xl shadow-lg px-6 py-4 w-full sm:w-4/12">
-								"The future of humanity and indeed, all life on earth, depends
-								on us."
-							</div>
-						</div> */}
 					</div>
 				</div>
 

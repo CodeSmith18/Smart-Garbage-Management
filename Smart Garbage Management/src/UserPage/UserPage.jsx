@@ -52,6 +52,10 @@ function UserPage() {
 		setShowModal(false);
 	};
 
+	const handleDonateClick = () => {
+		window.location.href = "http://localhost:3000/";
+	};
+
 	const handleConfirmAction = async () => {
 		if (actionType === "POST") {
 			// Store data in backend
@@ -236,7 +240,8 @@ function UserPage() {
 									keyboard_arrow_right
 								</span>
 							</button>
-							<button className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full">
+							<button onClick={handleDonateClick}
+							className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full">
 								<span className="material-icons-outlined float-left pr-2">
 									settings
 								</span>
