@@ -81,7 +81,7 @@ function Landing() {
 						</div>
 						<div className="flex items-center justify-center ">
 							<div className="w-52 p-4 bg-slate-200  rounded-lg shadow-md border-2 border-black  transition-transform transform hover:-translate-y-4 hover:shadow-xl">
-								<h2 className="text-2xl font-semibold text-gray-800">Admin</h2>
+								<h2 className="text-2xl font-semibold text-gray-800">RagMan</h2>
 								<Lottie
 									className="h-36"
 									animationData={animationData}
@@ -147,7 +147,7 @@ function Landing() {
 					</div>
 					<div className="flex items-center justify-center ">
 						<div className="w-52 p-4 bg-slate-200  rounded-lg shadow-md border-2 border-black  transition-transform transform hover:-translate-y-4 hover:shadow-xl">
-							<h2 className="text-2xl font-semibold text-gray-800">Admin</h2>
+							<h2 className="text-2xl font-semibold text-gray-800">RagMan</h2>
 							<Lottie
 								className="h-36"
 								animationData={animationData}

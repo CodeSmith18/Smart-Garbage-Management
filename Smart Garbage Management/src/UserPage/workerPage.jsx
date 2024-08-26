@@ -89,7 +89,7 @@ function WorkerPage() {
 									keyboard_arrow_right
 								</span>
 							</button>
-							<button className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full">
+							{/* <button className="inline-block text-gray-600 hover:text-blue-600 my-4 w-full">
 								<span className="material-icons-outlined float-left pr-2">
 									file_copy
 								</span>
@@ -97,7 +97,7 @@ function WorkerPage() {
 								<span className="material-icons-outlined float-right">
 									keyboard_arrow_right
 								</span>
-							</button>
+							</button> */}
 						</div>
 
 						<div className="rounded-xl shadow-lg mt-6 px-6 py-4 bg-white">
@@ -153,7 +153,7 @@ function WorkerPage() {
 							<div className="bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 border rounded-xl w-full sm:w-5/12 ml-0 sm:ml-2 p-6 shadow-lg">
 								<p className="text-4xl sm:text-5xl text-white">
 									Available Work <br />
-									<strong>10</strong>
+									<strong>...</strong>
 								</p>
 								<button
 									onClick={handleAssignedWorkClick}

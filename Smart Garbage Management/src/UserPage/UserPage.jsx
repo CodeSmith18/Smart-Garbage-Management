@@ -278,7 +278,7 @@ function UserPage() {
 							<div className="bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-300 border rounded-xl w-full sm:w-5/12 ml-0 sm:ml-2 p-6 shadow-lg">
 								<p className="text-4xl sm:text-5xl text-white">
 									Assign Work <br />
-									<strong>10</strong>
+									<strong>...</strong>
 								</p>
 								<button
 									onClick={handleAssignedWorkClick}
